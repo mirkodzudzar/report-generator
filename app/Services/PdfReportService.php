@@ -18,7 +18,6 @@ class PdfReportService
 
         $pdf = Pdf::loadView('tasks.reports.pdf', [
             'user' => $user,
-            'tasks' => $tasks,
             'statistics' => $statistics,
         ]);
 
@@ -32,7 +31,7 @@ class PdfReportService
         Storage::delete($pdfPath);
     }
 
-    protected function getTasksFor(User $user): Collection
+    private function getTasksFor(User $user): Collection
     {
         $response = Http::get(config('app.task_api'));
         $tasks = $response->json();
@@ -40,7 +39,7 @@ class PdfReportService
         return collect($tasks)->filter(fn($task) => $task['userId'] === $user->id);
     }
 
-    protected function getStatistics(Collection $tasks): array
+    private function getStatistics(Collection $tasks): array
     {
         $total = $tasks->count();
         $completed = $tasks->where('completed', true)->count();
