@@ -4,10 +4,12 @@ namespace App\Services;
 
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Events\AllTasksCompleted;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\ReportNotification;
+use App\Notifications\CongratulationNotification;
 
 class PdfReportService
 {
@@ -29,6 +31,10 @@ class PdfReportService
         $user->notify(new ReportNotification($pdfPath, $pdfFileName));
 
         Storage::delete($pdfPath);
+
+        if ($statistics['total'] > 0 && $statistics['total'] === $statistics['completed']) {
+            event(new AllTasksCompleted($user));
+        }
     }
 
     private function getTasksFor(User $user): Collection

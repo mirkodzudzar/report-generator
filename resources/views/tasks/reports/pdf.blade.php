@@ -10,7 +10,7 @@
     <p>{{ __('Total tasks: :total', ['total' => $statistics['total']]) }}</p>
     <p>{{ __('Completed tasks: :completed', ['completed' => $statistics['completed']]) }}</p>
     <p>{{ __('Incomplete tasks: :incomplete', ['incomplete' => $statistics['incomplete']]) }}</p>
-    <p>{{ __('Percentage completed: :percentage', ['percentage' => $statistics['percentage']]) }}</p>
+    <p>{{ __('Percentage completed: :percentage%', ['percentage' => $statistics['percentage']]) }}</p>
 </body>
 
 </html>
