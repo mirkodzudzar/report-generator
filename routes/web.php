@@ -24,6 +24,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::get('/tasks/reports', [TaskReportsController::class, 'create'])->middleware(['auth', 'verified'])->name('tasks.reports.create');
+Route::post('/tasks/reports', [TaskReportsController::class, 'store'])->middleware(['auth', 'verified'])->name('tasks.reports.store');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
