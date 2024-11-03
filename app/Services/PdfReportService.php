@@ -38,8 +38,6 @@ class PdfReportService
 
         $user->notify(new ReportNotification($pdfPath, $pdfFileName));
 
-        Storage::delete($pdfPath);
-
         if ($statistics['total'] > 0 && $statistics['total'] === $statistics['completed']) {
             event(new AllTasksCompleted($user));
         }
