@@ -11,6 +11,10 @@
     <p>{{ __('Completed tasks: :completed', ['completed' => $statistics['completed']]) }}</p>
     <p>{{ __('Incomplete tasks: :incomplete', ['incomplete' => $statistics['incomplete']]) }}</p>
     <p>{{ __('Percentage completed: :percentage%', ['percentage' => $statistics['percentage']]) }}</p>
+
+    <div>
+        <img src="data:image/png;base64,{{ $chartImage }}">
+    </div>
 </body>
 
 </html>

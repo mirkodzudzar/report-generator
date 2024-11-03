@@ -9,18 +9,26 @@ use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use App\Notifications\ReportNotification;
-use App\Notifications\CongratulationNotification;
 
 class PdfReportService
 {
+    protected $chartService;
+
+    public function __construct(ChartService $chartService)
+    {
+        $this->chartService = $chartService;
+    }
+
     public function generate(User $user): void
     {
         $tasks = $this->getTasksFor($user);
         $statistics = $this->getStatistics($tasks);
+        $chartImage = $this->chartService->generateChart($statistics);
 
         $pdf = Pdf::loadView('tasks.reports.pdf', [
             'user' => $user,
             'statistics' => $statistics,
+            'chartImage' => $chartImage,
         ]);
 
         $pdfFileName = "tasks-report-{$user->id}.pdf";
