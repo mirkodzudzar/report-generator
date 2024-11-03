@@ -22,21 +22,17 @@ class ChartService
 
         $html = View::make('tasks.reports.chart', $data)->render();
 
-        $filename = 'chart_' . uniqid() . '.png';
-        $tempPath = Storage::path('temp/' . $filename);
-
-        if (!Storage::exists('temp')) {
-            Storage::makeDirectory('temp');
-        }
+        $fileName = 'chart_' . uniqid() . '.png';
+        $filePath = Storage::path('temp/reports/' . $fileName);
 
         Browsershot::html($html)
             ->windowSize(600, 400)
             ->waitUntilNetworkIdle()
-            ->save($tempPath);
+            ->save($filePath);
 
-        $base64 = base64_encode(file_get_contents($tempPath));
+        $base64 = base64_encode(file_get_contents($filePath));
 
-        Storage::delete($tempPath);
+        Storage::delete($filePath);
 
         return $base64;
     }

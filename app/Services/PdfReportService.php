@@ -31,12 +31,12 @@ class PdfReportService
             'chartImage' => $chartImage,
         ]);
 
-        $pdfFileName = "tasks-report-{$user->id}.pdf";
-        $pdfPath = "temp/reports/{$pdfFileName}";
+        $fileName = 'report_' . uniqid() . '.pdf';
+        $filePath = 'temp/reports/' . $fileName;
 
-        Storage::put($pdfPath, $pdf->output());
+        Storage::put($filePath, $pdf->output());
 
-        $user->notify(new ReportNotification($pdfPath, $pdfFileName));
+        $user->notify(new ReportNotification($filePath, $fileName));
 
         if ($statistics['total'] > 0 && $statistics['total'] === $statistics['completed']) {
             event(new AllTasksCompleted($user));

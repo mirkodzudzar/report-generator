@@ -16,8 +16,8 @@ class ReportNotification extends Notification implements ShouldQueue
      * Create a new notification instance.
      */
     public function __construct(
-        private string $pdfPath,
-        private string $pdfFileName
+        private string $filePath,
+        private string $fileName
     ) {
     }
 
@@ -39,8 +39,8 @@ class ReportNotification extends Notification implements ShouldQueue
         return (new MailMessage)
             ->subject(__('Your tasks report'))
             ->line(__('Please find attached report for your tasks.'))
-            ->attach(Storage::path($this->pdfPath), [
-                'as' => $this->pdfFileName,
+            ->attach(Storage::path($this->filePath), [
+                'as' => $this->fileName,
                 'mime' => 'application/pdf',
             ]);
     }

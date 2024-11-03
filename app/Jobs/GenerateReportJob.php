@@ -18,7 +18,7 @@ class GenerateReportJob implements ShouldQueue
      * Create a new job instance.
      */
     public function __construct(
-        private User $user,
+        public User $user,
     ) {
     }
 
